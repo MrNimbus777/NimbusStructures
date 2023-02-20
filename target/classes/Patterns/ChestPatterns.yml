@@ -1,0 +1,6 @@
+hello:
+  max_slots: 5
+  min_slots: 10
+  items:
+    - 'diamond1'
+    - 'stone1'

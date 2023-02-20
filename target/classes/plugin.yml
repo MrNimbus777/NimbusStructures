@@ -1,0 +1,8 @@
+name: NimbusStructures
+main: net.nimbus.structures.NStructure
+version: 1.0
+api-version: 1.19
+commands:
+  structure:
+  nimbusstructures:
+    aliases: [nst]

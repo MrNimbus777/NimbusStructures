@@ -1,0 +1,28 @@
+Messages:
+  Commands:
+    structure:
+      create:
+        process: '&fStarted scanning structure &d%structure%&f. Volume: &b%volume%&f blocks.'
+        success: 'Structure %structure% has been saved into file %file%'
+        no-points: '&cThere are no selected points. Please use &d%selection_tool%&7.'
+        already-exists: '&cStructure &4%neme%&c already exists.'
+        usage: '&f&o/structure create <name>'
+      generate:
+        no-structure: '&cThere is no structure &4%name%&c.'
+        usage: '&f&o/structure generate <name> [north | east | south | west]'
+Settings:
+  prefix: '&7[&aS&a] &r'
+  selection_tool_material: WOODEN_AXE
+Generator:
+  buncger2:
+    worlds:
+      - world
+    biomes:
+      - plains
+      - sunflower_plains
+      - savanna
+      - forest
+      - dark_forest
+      - birch_forest
+    chance: 100 # how many chunks is necessary to spawn one structure.
+    height: 30-100
