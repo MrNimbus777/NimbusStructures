@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.Directional;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -142,7 +143,7 @@ public class Structure {
                                         } catch (Exception ignored) {
                                             String data = b.getBlockData().getAsString();
                                             data = data.replace("east=", "teas=");
-                                            data = data.replace("west=", "east");
+                                            data = data.replace("west=", "east=");
                                             data = data.replace("teas=", "west=");
                                             data = data.replace("north=", "hortn=");
                                             data = data.replace("south=", "north=");
@@ -394,6 +395,8 @@ public class Structure {
                             Utils.set(file.getConfig(), "blocks." + Math.abs(x - x1) + "." + Math.abs(y - y1) + "." + Math.abs(z - z1), ChestDataPattern.hash.get(c.getCustomName()));
                         } else
                             Utils.set(file.getConfig(), "blocks." + Math.abs(x - x1) + "." + Math.abs(y - y1) + "." + Math.abs(z - z1), c);
+                    } else if (b.getType() == Material.SPAWNER) {
+                        Utils.set(file.getConfig(), "blocks." + Math.abs(x - x1) + "." + Math.abs(y - y1) + "." + Math.abs(z - z1), (CreatureSpawner) b.getState());
                     } else {
                         Utils.set(file.getConfig(), "blocks." + Math.abs(x - x1) + "." + Math.abs(y - y1) + "." + Math.abs(z - z1), b.getBlockData());
                     }

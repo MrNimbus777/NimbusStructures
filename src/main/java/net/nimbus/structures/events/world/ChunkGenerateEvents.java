@@ -41,8 +41,6 @@ public class ChunkGenerateEvents implements Listener {
             int x = NStructure.a.r.nextInt(16);
             int z = NStructure.a.r.nextInt(16);
             Block b = c.getBlock(x, getMiddle(biomes.get(biome), "Y"), z);
-            CreatureSpawner spawner = (CreatureSpawner) b.getState();
-            spawner.getSpawnedType();
             ArrayList<Structure> structures = new ArrayList<>();
             try{
                 for(String name : NStructure.a.getConfig().getConfigurationSection("Generator").getKeys(false)){

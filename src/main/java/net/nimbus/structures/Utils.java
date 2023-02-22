@@ -7,6 +7,7 @@ import net.nimbus.structures.structure.units.StructureChestPattern;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -30,6 +31,12 @@ public class Utils {
         config.set(key, null);
         config.set(key+".type", "chestGenerator");
         config.set(key+".chestData", chest.getKey());
+    }
+
+    public static void set(FileConfiguration config, String key, CreatureSpawner spawner){
+        config.set(key, null);
+        config.set(key+".type", "spawner");
+        config.set(key+".entity", spawner.getSpawnedType());
     }
 
     public static BlockData getBlockData(FileConfiguration config, String key){

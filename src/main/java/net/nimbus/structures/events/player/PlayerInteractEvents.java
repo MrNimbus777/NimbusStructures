@@ -17,7 +17,6 @@ public class PlayerInteractEvents implements Listener {
     public void PIE(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            p.sendMessage("" + (e.getClickedBlock().getBlockData() instanceof Directional));
             if (!sleep) {
                 sleep = true;
                 if (p.hasPermission("nst.selection")) {
