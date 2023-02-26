@@ -11,6 +11,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Fence;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
@@ -19,8 +20,6 @@ public class Structure {
 
     public static HashMap<String, Structure> hash = new HashMap<>();
 
-    public static HashMap<BlockFace, Integer> faceToInt = new HashMap<>();
-    public static HashMap<Integer, BlockFace> intToFace = new HashMap<>();
 
     String key;
     int xBox;
@@ -56,7 +55,7 @@ public class Structure {
                                         Block b = new StructureBlock(Utils.getBlockData(config, "blocks." + x + "." + y + "." + z)).setBlock(location.clone().add(-z, y, x));
                                         try {
                                             Directional dir = (Directional) b.getBlockData();
-                                            dir.setFacing(summingFaces(dir.getFacing(), face));
+                                            dir.setFacing(Utils.summingFaces(dir.getFacing(), face));
                                             b.setBlockData(dir);
                                         } catch (Exception ignored) {
                                             String data = b.getBlockData().getAsString();
@@ -72,7 +71,7 @@ public class Structure {
                                         Block b = Utils.getContainer(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(-z, y, x));
                                         try {
                                             Directional dir = (Directional) b.getBlockData();
-                                            dir.setFacing(summingFaces(dir.getFacing(), face));
+                                            dir.setFacing(Utils.summingFaces(dir.getFacing(), face));
                                             b.setBlockData(dir);
                                         } catch (Exception ignored) {
                                             String data = b.getBlockData().getAsString();
@@ -89,7 +88,7 @@ public class Structure {
                                             Block b = Utils.getChestPattern(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(-z, y, x));
                                             try {
                                                 Directional dir = (Directional) b.getBlockData();
-                                                dir.setFacing(summingFaces(dir.getFacing(), face));
+                                                dir.setFacing(Utils.summingFaces(dir.getFacing(), face));
                                                 b.setBlockData(dir);
                                             } catch (Exception ignored) {
                                                 String data = b.getBlockData().getAsString();
@@ -138,7 +137,7 @@ public class Structure {
                                         Block b = new StructureBlock(Utils.getBlockData(config, "blocks." + x + "." + y + "." + z)).setBlock(location.clone().add(-x, y, -z));
                                         try {
                                             Directional dir = (Directional) b.getBlockData();
-                                            dir.setFacing(summingFaces(dir.getFacing(), face));
+                                            dir.setFacing(Utils.summingFaces(dir.getFacing(), face));
                                             b.setBlockData(dir);
                                         } catch (Exception ignored) {
                                             String data = b.getBlockData().getAsString();
@@ -155,7 +154,7 @@ public class Structure {
                                         Block b = Utils.getContainer(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(-x, y, -z));
                                         try {
                                             Directional dir = (Directional) b.getBlockData();
-                                            dir.setFacing(summingFaces(dir.getFacing(), face));
+                                            dir.setFacing(Utils.summingFaces(dir.getFacing(), face));
                                             b.setBlockData(dir);
                                         } catch (Exception ignored) {
                                             String data = b.getBlockData().getAsString();
@@ -173,7 +172,7 @@ public class Structure {
                                             Block b = Utils.getChestPattern(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(-x, y, -z));
                                             try {
                                                 Directional dir = (Directional) b.getBlockData();
-                                                dir.setFacing(summingFaces(dir.getFacing(), face));
+                                                dir.setFacing(Utils.summingFaces(dir.getFacing(), face));
                                                 b.setBlockData(dir);
                                             } catch (Exception ignored) {
                                                 String data = b.getBlockData().getAsString();
@@ -220,56 +219,16 @@ public class Structure {
                             if (type != null) {
                                 switch (type) {
                                     case "block": {
-                                        Block b = new StructureBlock(Utils.getBlockData(config, "blocks." + x + "." + y + "." + z)).setBlock(location.clone().add(z, y, -x));
-
-                                        try {
-                                            Directional dir = (Directional) b.getBlockData();
-                                            dir.setFacing(summingFaces(dir.getFacing(), face));
-                                            b.setBlockData(dir);
-                                        } catch (Exception ignored) {
-                                            String data = b.getBlockData().getAsString();
-                                            data = data.replace("north=", "hortn=");
-                                            data = data.replace("east=", "north=");
-                                            data = data.replace("south=", "east=");
-                                            data = data.replace("west=", "south=");
-                                            data = data.replace("hortn=", "west=");
-                                            b.setBlockData(Bukkit.createBlockData(data));
-                                        }
+                                        Block b = new StructureBlock(Utils.getBlockData(config, "blocks." + x + "." + y + "." + z)).setBlock(location.clone().add(z, y, -x), face);
                                         break;
                                     }
                                     case "container": {
-                                        Block b = Utils.getContainer(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(z, y, -x));
-                                        try {
-                                            Directional dir = (Directional) b.getBlockData();
-                                            dir.setFacing(summingFaces(dir.getFacing(), face));
-                                            b.setBlockData(dir);
-                                        } catch (Exception ignored) {
-                                            String data = b.getBlockData().getAsString();
-                                            data = data.replace("north=", "hortn=");
-                                            data = data.replace("east=", "north=");
-                                            data = data.replace("south=", "east=");
-                                            data = data.replace("west=", "south=");
-                                            data = data.replace("hortn=", "west=");
-                                            b.setBlockData(Bukkit.createBlockData(data));
-                                        }
+                                        Block b = Utils.getContainer(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(z, y, -x), face);
                                         break;
                                     }
                                     case "chestGenerator":
                                         try {
-                                            Block b = Utils.getChestPattern(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(z, y, -x));
-                                            try {
-                                                Directional dir = (Directional) b.getBlockData();
-                                                dir.setFacing(summingFaces(dir.getFacing(), face));
-                                                b.setBlockData(dir);
-                                            } catch (Exception ignored) {
-                                                String data = b.getBlockData().getAsString();
-                                                data = data.replace("north=", "hortn=");
-                                                data = data.replace("east=", "north=");
-                                                data = data.replace("south=", "east=");
-                                                data = data.replace("west=", "south=");
-                                                data = data.replace("hortn=", "west=");
-                                                b.setBlockData(Bukkit.createBlockData(data));
-                                            }
+                                            Block b = Utils.getChestPattern(config, "blocks." + x + "." + y + "." + z).setBlock(location.clone().add(z, y, -x), face);
                                         } catch (Exception e) {
                                         }
                                         break;
@@ -339,24 +298,10 @@ public class Structure {
         }.runCicle((xBox+1)*(yBox+1)*(zBox+1)/100);
     }
 
-    BlockFace summingFaces(BlockFace face1, BlockFace face2){
-        return intToFace.get(Math.abs((faceToInt.getOrDefault(face1, 0)+faceToInt.getOrDefault(face2, 0)) % 4));
-    }
+
 
     YmlFile getStructureYML(String key){
         return YmlFile.get("Structures", key);
-    }
-
-    public static void loadHashes(){
-        faceToInt.put(BlockFace.NORTH, 0);
-        faceToInt.put(BlockFace.EAST, 1);
-        faceToInt.put(BlockFace.SOUTH, 2);
-        faceToInt.put(BlockFace.WEST, 3);
-
-        intToFace.put(0, BlockFace.NORTH);
-        intToFace.put(1, BlockFace.EAST);
-        intToFace.put(2, BlockFace.SOUTH);
-        intToFace.put(3, BlockFace.WEST);
     }
 
     public static void create(String key, Location loc1, Location loc2){

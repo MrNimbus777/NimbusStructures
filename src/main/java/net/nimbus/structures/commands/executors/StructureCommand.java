@@ -5,6 +5,7 @@ import net.nimbus.structures.Utils;
 import net.nimbus.structures.YmlFile;
 import net.nimbus.structures.structure.Structure;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -51,6 +52,21 @@ public class StructureCommand implements CommandExecutor {
                         p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.generate.usage")));
                 } else if (args[0].equalsIgnoreCase("remove")) {
 
+                } else {
+                    int max = (int) Math.sqrt(Material.values().length) + 1;
+                    int x = 0;
+                    int y = 0;
+                    for(Material m : Material.values()){
+                        try{
+                            p.getLocation().add(x*2, -1 , y*2).getBlock().setType(Material.GRASS_BLOCK);
+                            p.getLocation().add(x*2, 0 , y*2).getBlock().setType(m);
+                            x++;
+                            if(x > max){
+                                y++;
+                                x = 0;
+                            }
+                        } catch (Exception ex){}
+                    }
                 }
             }
         }

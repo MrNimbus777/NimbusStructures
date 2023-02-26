@@ -78,7 +78,7 @@ public class NStructure extends JavaPlugin {
         loadCommands();
         loadEvents();
         loadVariables();
-        Structure.loadHashes();
+        Utils.loadHashes();
 
         saveResource("Patterns/ItemPatterns.yml", false);
         itemPatterns = new YmlFile("Patterns", "ItemPatterns").create();

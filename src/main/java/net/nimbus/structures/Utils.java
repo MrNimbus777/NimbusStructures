@@ -6,12 +6,14 @@ import net.nimbus.structures.structure.units.StructureContainer;
 import net.nimbus.structures.structure.units.StructureChestPattern;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,5 +97,24 @@ public class Utils {
      * */
     public static String toPrefix(String str) {
         return NStructure.a.prefix+toColor(str);
+    }
+
+    public static HashMap<BlockFace, Integer> faceToInt = new HashMap<>();
+    public static HashMap<Integer, BlockFace> intToFace = new HashMap<>();
+
+    public static BlockFace summingFaces(BlockFace face1, BlockFace face2){
+        return intToFace.get(Math.abs((faceToInt.getOrDefault(face1, 0)+faceToInt.getOrDefault(face2, 0)) % 4));
+    }
+
+    public static void loadHashes(){
+        faceToInt.put(BlockFace.NORTH, 0);
+        faceToInt.put(BlockFace.EAST, 1);
+        faceToInt.put(BlockFace.SOUTH, 2);
+        faceToInt.put(BlockFace.WEST, 3);
+
+        intToFace.put(0, BlockFace.NORTH);
+        intToFace.put(1, BlockFace.EAST);
+        intToFace.put(2, BlockFace.SOUTH);
+        intToFace.put(3, BlockFace.WEST);
     }
 }
