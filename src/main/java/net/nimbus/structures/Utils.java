@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +25,6 @@ public class Utils {
         config.set(key+".blockData", blockData.getAsString());
     }
     public static void set(FileConfiguration config, String key, Container chest){
-
         config.set(key+".type", "container");
         config.set(key+".blockData", chest.getBlockData().getAsString());
         for(int i = 0; i < chest.getInventory().getSize(); i++)config.set(key+".inventory."+i, chest.getInventory().getItem(i));
@@ -39,6 +39,15 @@ public class Utils {
         config.set(key, null);
         config.set(key+".type", "spawner");
         config.set(key+".entity", spawner.getSpawnedType());
+    }
+
+    public static void set(FileConfiguration config, String key, Sign sign){
+        config.set(key, null);
+        config.set(key+".type", "sign");
+        config.set(key+".blockData", sign.getBlockData().getAsString());
+        for(int i = 0; i < 4; i++){
+            config.set(key+".lines."+i, sign.getLine(i));
+        }
     }
 
     public static BlockData getBlockData(FileConfiguration config, String key){

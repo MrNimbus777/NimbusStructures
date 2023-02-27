@@ -68,6 +68,7 @@ public class NStructure extends JavaPlugin {
         } catch (Exception e){
             selection_tool = Material.WOODEN_AXE;
         }
+        prefix = Utils.toColor(getConfig().getString("Settings.prefix"));
     }
 
     public void onEnable() {

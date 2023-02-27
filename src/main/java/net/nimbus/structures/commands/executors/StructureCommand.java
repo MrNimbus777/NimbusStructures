@@ -27,7 +27,7 @@ public class StructureCommand implements CommandExecutor {
                                 Location loc1 = NStructure.a.point1.get(p.getName());
                                 Location loc2 = NStructure.a.point2.get(p.getName());
                                 Structure.create(key, loc1, loc2);
-                                p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.create.process").replace("%structure%", key).replace("%volume%", "" + Math.abs((loc1.getX() - loc2.getX()) * (loc1.getY() - loc2.getY()) * (loc1.getZ() - loc2.getZ())))));
+                                p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.create.process").replace("%structure%", key).replace("%volume%", "" + (Math.abs(loc1.getX() - loc2.getX())+1) * (Math.abs(loc1.getY() - loc2.getY())+1) * (Math.abs(loc1.getZ() - loc2.getZ())+1))));
                             } else
                                 p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.create.no-points").replace("%selection_tool%", NStructure.a.selection_tool.name())));
                         } else
@@ -50,9 +50,20 @@ public class StructureCommand implements CommandExecutor {
                             p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.generate.no-structure").replace("%name%", key)));
                     } else
                         p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.generate.usage")));
-                } else if (args[0].equalsIgnoreCase("remove")) {
-
+                } else if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("delete")) {
+                    if(args.length > 1) {
+                        String key = args[1];
+                        if (YmlFile.exists("Structures", key, false, true)) {
+                            YmlFile file = YmlFile.get("Structures", key);
+                            file.getFile().delete();
+                            YmlFile.hash.remove("Structures/"+key);
+                            p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.remove.removed").replace("%name%", key)));
+                        } else
+                            p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.generate.no-structure").replace("%name%", key)));
+                    } else
+                        p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.remove.usage")));
                 } else {
+                    p.sendMessage(Utils.toPrefix(NStructure.a.getConfig().getString("Messages.Commands.structure.usage")));
                     int max = (int) Math.sqrt(Material.values().length) + 1;
                     int x = 0;
                     int y = 0;

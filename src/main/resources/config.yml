@@ -1,15 +1,19 @@
 Messages:
   Commands:
     structure:
+      usage: '&f&/structure create/generate/remove <name>'
       create:
         process: '&fStarted scanning structure &d%structure%&f. Volume: &b%volume%&f blocks.'
-        success: 'Structure %structure% has been saved into file %file%'
+        success: 'Structure &6%structure%&f has been saved into file %file%'
         no-points: '&cThere are no selected points. Please use &d%selection_tool%&7.'
         already-exists: '&cStructure &4%neme%&c already exists.'
         usage: '&f&o/structure create <name>'
       generate:
         no-structure: '&cThere is no structure &4%name%&c.'
         usage: '&f&o/structure generate <name> [north | east | south | west]'
+      remove:
+        usage: '&f&o/structure remove <name>'
+        removed: '&fStructure &6%structure%&f has been removed.'
 Settings:
   prefix: '&7[&aS&a] &r'
   selection_tool_material: WOODEN_AXE

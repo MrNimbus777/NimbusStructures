@@ -9,7 +9,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.block.data.Rail;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class StructureBlock implements StructureUnit {
